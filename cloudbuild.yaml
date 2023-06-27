@@ -1,0 +1,38 @@
+steps:
+  - name: 'python:3.7-stretch'
+    args:
+      - bash
+      - -c
+      - curl https://raw.githubusercontent.com/apache/beam/v${_APACHE_BEAM_VERSION}/sdks/python/apache_beam/examples/wordcount.py > wordcount.py
+  - name: 'python:3.7-stretch'
+    args:
+      - bash
+      - -c
+      - |
+        [[ "${_PIPELINE_WAIT_UNTIL_FINISH}" == "false" ]] && \
+        sed -i "s#result\.wait_until_finish()##" wordcount.py \
+        || true
+  - name: 'python:3.7-stretch'
+    args:
+      - bash
+      - -c
+      - |
+        cat wordcount.py
+  - name: 'python:3.7-stretch'
+    args:
+      - bash
+      - -c
+      - |
+        pip install 'apache-beam[gcp]==${_APACHE_BEAM_VERSION}' && \
+        python wordcount.py \
+          --runner=DataflowRunner \
+          --project=explorede \
+          --temp_location=gs://explorede-390910/temp/ \
+          --staging_location=gs://explorede-390910/staging/ \
+          --output=gs://explorede-390910/output \
+          --labels=airflow-version=v2-0-0-dev0 \
+          --job_name=start-python-job-local-5bcf3d71 \
+          --region=us-central1
+substitutions:
+  _APACHE_BEAM_VERSION: "2.22.0"
+  _PIPELINE_WAIT_UNTIL_FINISH: "true"
