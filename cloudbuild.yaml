@@ -26,7 +26,7 @@ steps:
         pip install 'apache-beam[gcp]==${_APACHE_BEAM_VERSION}' && \
         python wordcount.py \
           --runner=DataflowRunner \
-          --project=explorede \
+          --project=explorede-390910 \
           --temp_location=gs://explorede-390910/temp/ \
           --staging_location=gs://explorede-390910/staging/ \
           --output=gs://explorede-390910/output \
