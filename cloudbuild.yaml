@@ -37,4 +37,4 @@ substitutions:
   _APACHE_BEAM_VERSION: "2.22.0"
   _PIPELINE_WAIT_UNTIL_FINISH: "true"
 options:
-  logging: NONE 
+  logging: CLOUD_LOGGING_ONLY
