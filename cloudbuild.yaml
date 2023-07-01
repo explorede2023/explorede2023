@@ -4,8 +4,8 @@ steps:
     waitFor: ['-']
     args:
     - --dockerfile=./Dockerfile
-    - --destination=${_LOCATION}-docker.pkg.dev/explorede-390910/${_ARTIFACT_REPOSITORY}:latest
-    - --destination=${_LOCATION}-docker.pkg.dev/explorede-390910/${_ARTIFACT_REPOSITORY}:${_TAG}
+    - --destination=${_LOCATION}-docker.pkg.dev/explorede-390910/learning/one:latest
+    - --destination=${_LOCATION}-docker.pkg.dev/explorede-390910/learning/one:${_TAG}
     - --cache=true
     - --cache-ttl=48h
 
