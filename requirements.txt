@@ -1,0 +1,8 @@
+apache-beam[gcp]
+google-cloud-bigquery==1.26.1
+py-dateutil
+Cython
+pyyaml
+protobuf
+google-cloud-core==1.4.1
+pytz

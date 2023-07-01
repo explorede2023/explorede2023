@@ -1,40 +1,28 @@
 steps:
-  - name: 'python:3.7-stretch'
+  - id: 'Build-Dataflow-Image'
+    name: 'gcr.io/kaniko-project/executor:latest'
+    waitFor: ['Config-Docker-Image']
     args:
-      - bash
-      - -c
-      - curl https://raw.githubusercontent.com/apache/beam/v${_APACHE_BEAM_VERSION}/sdks/python/apache_beam/examples/wordcount.py > wordcount.py
-  - name: 'python:3.7-stretch'
+    - --dockerfile=./Dockerfile
+    - --destination=${_LOCATION}-docker.pkg.learning/explorede-390910/${_ARTIFACT_REPOSITORY}/${_SERVICE_TAG}:latest
+    - --destination=${_LOCATION}-docker.pkg.learning/explorede-390910/${_ARTIFACT_REPOSITORY}/${_SERVICE_TAG}:${_TAG}
+    - --cache=true
+    - --cache-ttl=48h
+
+  - id: "Build-template"
+    name: "gcr.io/cloud-builders/gcloud"
+    waitFor: ['Build-Dataflow-Image']
+    entrypoint: 'bash'
     args:
-      - bash
-      - -c
+      - '-c'
       - |
-        [[ "${_PIPELINE_WAIT_UNTIL_FINISH}" == "false" ]] && \
-        sed -i "s#result\.wait_until_finish()##" wordcount.py \
-        || true
-  - name: 'python:3.7-stretch'
-    args:
-      - bash
-      - -c
-      - |
-        cat wordcount.py
-  - name: 'python:3.7-stretch'
-    args:
-      - bash
-      - -c
-      - |
-        pip install 'apache-beam[gcp]==${_APACHE_BEAM_VERSION}' && \
-        python wordcount.py \
-          --runner=DataflowRunner \
-          --project=explorede-390910 \
-          --temp_location=gs://explorede-390910/temp/ \
-          --staging_location=gs://explorede-390910/staging/ \
-          --output=gs://explorede-390910/output \
-          --labels=airflow-version=v2-0-0-dev0 \
-          --job_name=start-python-job-local-5bcf3d71 \
-          --region=europe-west1
+        gcloud config set project explorede-390910
+        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/${_SERVICE_TAG}/latest.json" --image "${_LOCATION}-docker.pkg.learning/explorede-390910/${_ARTIFACT_REPOSITORY}/${_SERVICE_TAG}:${_TAG}" --sdk-language "PYTHON"
+    timeout: 1800s
+
 substitutions:
-  _APACHE_BEAM_VERSION: "2.22.0"
-  _PIPELINE_WAIT_UNTIL_FINISH: "true"
-options:
-  logging: CLOUD_LOGGING_ONLY
+  _LOCATION: europe-west1
+  _ARTIFACT_REPOSITORY: learing
+
+timeout: '3600s'
+tags: ['${_TAG}', 'build', '${_SERVICE_TAG}']
