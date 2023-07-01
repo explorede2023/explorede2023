@@ -1,6 +1,6 @@
 steps:
   - id: 'Build-Dataflow-Image'
-    name: 'gcr.io/kaniko-project/executor/670d12715de4'
+    name: 'gcr.io/kaniko-project/executor:latest'
     waitFor: ['-']
     args:
     - --dockerfile=./Dockerfile
