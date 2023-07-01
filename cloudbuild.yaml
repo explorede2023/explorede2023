@@ -1,7 +1,7 @@
 steps:
   - id: 'Build-Dataflow-Image'
     name: 'gcr.io/kaniko-project/executor:latest'
-    waitFor: ['Config-Docker-Image']
+    waitFor: ['-']
     args:
     - --dockerfile=./Dockerfile
     - --destination=${_LOCATION}-docker.pkg.learning/explorede-390910/${_ARTIFACT_REPOSITORY}/${_SERVICE_TAG}:latest
