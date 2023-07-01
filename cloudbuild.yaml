@@ -26,3 +26,6 @@ substitutions:
 
 timeout: '3600s'
 tags: ['${_TAG}', 'build', '${_SERVICE_TAG}']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
