@@ -17,7 +17,7 @@ steps:
       - '-c'
       - |
         gcloud config set project explorede-390910
-        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/${_SERVICE_TAG}/latest.json" --image "${_LOCATION}-docker.pkg.dev/explorede-390910/${_ARTIFACT_REPOSITORY}/${_SERVICE_TAG}:${_TAG}" --sdk-language "PYTHON"
+        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/one/latest.json" --image "${_LOCATION}-docker.pkg.dev/explorede-390910/${_ARTIFACT_REPOSITORY}/one:${_TAG}" --sdk-language "PYTHON"
     timeout: 1800s
 
 substitutions:
