@@ -1,0 +1,7 @@
+{
+    "defaultEnvironment": {},
+    "image": "europe-west1-docker.pkg.dev/explorede-390910/learning/one:c516b202e515",
+    "sdkInfo": {
+        "language": "PYTHON"
+    }
+}
