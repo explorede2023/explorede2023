@@ -28,9 +28,9 @@ CREDENTIALS, PROJECT = google.auth.default()
 def dataflow(beam_args: List[str] = None) -> None:
     options = PipelineOptions(
         beam_args,
-        runner="DirectRunner",
         save_main_session=True,
         streaming=False,
+        use_public_ips=False,
         staging_location="gs://explorede-390910/staging",
         temp_location="gs://explorede-390910/temp",
     )
