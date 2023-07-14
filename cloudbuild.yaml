@@ -23,7 +23,7 @@ substitutions:
   _LOCATION: europe-west1
   _ARTIFACT_REPOSITORY: learning
 
-timeout: '3600s'
+timeout: '3500s'
 tags: ['${_TAG}', 'build', '${_SERVICE_TAG}']
 
 options:
