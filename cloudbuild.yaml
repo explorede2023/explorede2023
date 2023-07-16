@@ -7,9 +7,9 @@ steps:
       - '-c'
       - |
         gcloud config set builds/use_kaniko True
-        gcloud builds submit -t gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}:latest .
-        gcloud container images add-tag gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}
-        gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}:${_TAG}
+        gcloud builds submit -t gcr.io/explorede-390910/dataflows/batch/second:latest .
+        gcloud container images add-tag gcr.io/explorede-390910/dataflows/batch/second
+        gcr.io/explorede-390910/dataflows/batch/second:latest
 
   - id: "Build-template"
     name: "gcr.io/cloud-builders/gcloud"
