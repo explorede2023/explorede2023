@@ -1,27 +1,26 @@
 steps:
-  - id: 'Build-Dataflow-Image'
-    name: 'gcr.io/kaniko-project/executor:latest'
+  - id: 'Build-Image'
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
     waitFor: ['-']
     args:
-    - --dockerfile=./Dockerfile
-    - --destination=${_LOCATION}-docker.pkg.dev/explorede-390910/learning/one:latest
-    - --cache=true
-    - --cache-ttl=48h
+      - '-c'
+      - |
+        gcloud config set builds/use_kaniko True
+        gcloud builds submit -t gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}:latest .
+        gcloud container images add-tag gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}
+        gcr.io/explorede-390910/dataflows/batch/${_SERVICE_TAG}:${_TAG}
 
   - id: "Build-template"
     name: "gcr.io/cloud-builders/gcloud"
-    waitFor: ['Build-Dataflow-Image']
+    waitFor: ['Build-Image']
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         gcloud config set project explorede-390910
-        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/one/latest.json" --image "${_LOCATION}-docker.pkg.dev/explorede-390910/${_ARTIFACT_REPOSITORY}/one:latest" --sdk-language "PYTHON"
+        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/one/latest.json" --image "gcr.io/$PROJECT_ID/dataflows/batch/${_SERVICE_TAG}:${_TAG}" --sdk-language "PYTHON"
     timeout: 1800s
-
-substitutions:
-  _LOCATION: europe-west1
-  _ARTIFACT_REPOSITORY: learning
 
 timeout: '3500s'
 tags: ['${_TAG}', 'build', '${_SERVICE_TAG}']
