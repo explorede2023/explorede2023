@@ -18,7 +18,7 @@ steps:
       - '-c'
       - |
         gcloud config set project explorede-390910
-        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/one/latest.json" --image "gcr.io/explorede-390910/dataflows/batch/second:latest" --sdk-language "PYTHON"
+        gcloud dataflow flex-template build "gs://explorede-390910/flex-templates/batch/one/latest.json" --image "gcr.io/explorede-390910/dataflows-batch:latest" --sdk-language "PYTHON"
     timeout: 1800s
 
 timeout: '3500s'
