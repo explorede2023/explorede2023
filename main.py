@@ -43,4 +43,4 @@ def dataflow(beam_args: List[str] = None) -> None:
 if __name__ == "__main__":
     pylog.getLogger().setLevel(pylog.INFO)
 
-    print("Starting Dataflow")
+    print("Starting Dataflow on 30July")
