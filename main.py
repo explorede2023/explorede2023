@@ -30,9 +30,7 @@ def dataflow(beam_args: List[str] = None) -> None:
         beam_args,
         save_main_session=True,
         streaming=False,
-        use_public_ips=False,
-        staging_location="gs://explorede-390910/staging",
-        temp_location="gs://explorede-390910/temp",
+        use_public_ips=False
     )
 
     with beam.Pipeline(options=options) as pipe:

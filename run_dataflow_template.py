@@ -12,7 +12,7 @@ job_name = (
     + datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
 )
 
-dataflow_dev_environment = {
+dataflow_dev_environment = {    
     "tempLocation": "gs://explorede-390910/temp",
     "stagingLocation": "gs://explorede-390910/staging",
     "maxWorkers": 1,
