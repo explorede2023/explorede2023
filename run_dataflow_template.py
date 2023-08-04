@@ -7,18 +7,14 @@ import google.auth
 CREDENTIALS, PROJECT = google.auth.default()
 dataflow_service = build("dataflow", "v1b3", credentials=CREDENTIALS)
 
-job_name = (
-    "test-dataflow"
-    + datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
-)
+job_name = ("test-dataflow-"+ datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S"))
 
 dataflow_dev_environment = {    
-    "tempLocation": "gs://explorede-390910/temp",
-    "stagingLocation": "gs://explorede-390910/staging",
-    "maxWorkers": 1,
-    "machineType": "n1-standard-1",
-    "enableStreamingEngine": False,
-    "diskSizeGb": 10,
+    "temp_location": "gs://explorede-390910/temp",
+    "staging_location": "gs://explorede-390910/staging",
+    "machine_type": "n1-standard-1",
+    "enable_streaming_engine": False,
+    "disk_size_gb": 10,
 }
 
 launch_parameter = {
